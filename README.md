@@ -8,6 +8,8 @@ Extract files from a ZIP archive
 
 Extracts the contents of the ZIP archive `file`.
 
+Returns a promise for an array containing details of what was extracted.
+
 The default value for `options` is `{ path: '.' }`. Currently `path` is the
 only option, and is the output path for the extraction.
 
@@ -23,7 +25,7 @@ If `path` does not exist, decompress-zip will attempt to create it first.
 
 ### .list(file)
 
-Returns an array of paths for the files stored in the archive
+Returns a promise for an array of the paths of the files stored in the archive.
 
 ```js
 decompress.list('example.zip'); // ['file.txt', 'dir/', 'dir/another-file.txt']
