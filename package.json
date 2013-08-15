@@ -1,14 +1,14 @@
 {
-  "name": "decompress",
-  "version": "0.0.0",
+  "name": "decompress-zip",
+  "version": "0.0.1",
   "description": "A library for reading data from zip files",
-  "main": "decompress.js",
+  "main": "lib/decompress-zip.js",
   "scripts": {
     "test": "grunt test"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wibblymat/decompress.git"
+    "url": "https://github.com/bower/decompress-zip.git"
   },
   "keywords": [
     "zip",
@@ -21,10 +21,13 @@
     "extract",
     "zlib"
   ],
-  "author": "Mat Scales <mscales@google.com>",
-  "license": "BSD",
+  "author": "The Bower authors",
+  "licenses": [{
+  	"type": "MIT",
+  	"url": "https://github.com/bower/bower/blob/master/LICENSE"
+  }],
   "bugs": {
-    "url": "https://github.com/wibblymat/decompress/issues"
+    "url": "https://github.com/bower/decompress-zip/issues"
   },
   "devDependencies": {
     "grunt-exec": "~0.4.2",
