@@ -22,10 +22,12 @@
     "zlib"
   ],
   "author": "The Bower authors",
-  "licenses": [{
-  	"type": "MIT",
-  	"url": "https://github.com/bower/bower/blob/master/LICENSE"
-  }],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/bower/bower/blob/master/LICENSE"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/bower/decompress-zip/issues"
   },
@@ -43,6 +45,7 @@
     "zlib": "~1.0.5",
     "q": "~0.9.6",
     "mkpath": "~0.1.0",
-    "binary": "~0.3.0"
+    "binary": "~0.3.0",
+    "touch": "0.0.2"
   }
 }
