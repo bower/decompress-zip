@@ -41,7 +41,8 @@
     "grunt-simple-mocha": "~0.4.0",
     "mocha": "~1.12.0",
     "glob": "~3.2.6",
-    "tmp": "0.0.21"
+    "tmp": "0.0.21",
+    "request": "~2.27.0"
   },
   "dependencies": {
     "zlib": "~1.0.5",
