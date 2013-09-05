@@ -6,23 +6,33 @@ var path = require('path');
 
 var url = 'https://drive.google.com/uc?id=0Bxxp2pVhWG1DTFNWQ1hsSkZKZmM&export=download';
 
+var errorHandler = function (error) {
+    throw error;
+};
+
+var extract = function (filename) {
+    exec('tar -xvzf ' + filename, {cwd: path.join(__dirname, 'test')}, function (err, stdout, stderr) {
+        if (err) {
+            throw err;
+        }
+
+        console.log('Done');
+    });
+};
+
 tmp.file({prefix: 'assets', postfix: '.tgz'}, function (err, filename, fd) {
     console.log('Downloading ' + url + ' to ' + filename);
 
-    var out = fs.createWriteStream(filename);
-    var pipe = request(url).pipe(out);
+    var read = request(url);
+    var write = fs.createWriteStream(filename);
 
-    pipe.on('finish', function () {
-        exec('tar -xvzf ' + filename, {cwd: path.join(__dirname, 'test')}, function (err, stdout, stderr) {
-            if (err) {
-                throw err;
-            }
+    read.on('error', errorHandler);
+    write.on('error', errorHandler);
 
-            console.log('Done');
-        });
+    // For node 0.8 we can't just use the 'finish' event of the pipe
+    read.on('end', function () {
+        write.end(extract.bind(null, filename));
     });
 
-    pipe.on('error', function (err) {
-        throw err;
-    });
+    read.pipe(write, {end: false});
 });
