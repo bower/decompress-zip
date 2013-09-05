@@ -66,8 +66,6 @@ describe('Extract', function () {
                     done();
                 });
             });
-
-            it('should set the correct permissions and ownership');
         });
     });
 });
