@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
-var decompress = require('../lib/decompress-zip');
+var DecompressZip = require('../lib/decompress-zip');
 var pkg = require('../package.json');
 var path = require('path');
 var glob = require('glob');
@@ -18,9 +18,10 @@ if (samples.length === 0) {
 
 describe('Smoke test', function () {
     it('should find the public interface', function () {
-        assert.strictEqual(decompress.version, pkg.version, 'decompress.version is correct');
-        assert.isFunction(decompress.extract, 'decompress.extract is a function');
-        assert.isFunction(decompress.extract, 'decompress.list is a function');
+        assert.strictEqual(DecompressZip.version, pkg.version, 'DecompressZip.version is correct');
+        assert.isFunction(DecompressZip, 'constructor is a function');
+        assert.isFunction(DecompressZip.prototype.list, 'decompress.list is a function');
+        assert.isFunction(DecompressZip.prototype.extract, 'decompress.extract is a function');
     });
 });
 
@@ -44,12 +45,19 @@ describe('Extract', function () {
 
             it('should extract without any errors', function (done) {
                 this.timeout(10000);
-                decompress.extract(path.join(assetsPath, sample), {path: tmpDir})
-                .then(function () {
-                    assert(true, 'success callback executed');
+                var zip = new DecompressZip(path.join(assetsPath, sample));
+
+                zip.on('extract', function () {
+                    assert(true, 'success callback should be called');
                     done();
-                })
-                .done();
+                });
+
+                zip.on('error', function () {
+                    assert(false, 'error callback should not be called');
+                    done();
+                });
+
+                zip.extract({path: tmpDir});
             });
 
             it('should have the same output files as expected', function (done) {
