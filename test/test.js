@@ -26,6 +26,37 @@ describe('Smoke test', function () {
 });
 
 describe('Extract', function () {
+    describe('errors', function () {
+        var tmpDir;
+
+        before(function (done) {
+            tmp.dir({unsafeCleanup: true}, function (err, dir) {
+                if (err) {
+                    throw err;
+                }
+
+                tmpDir = dir;
+                done();
+            });
+        });
+
+        it('should emit an error when the file does not exist', function (done) {
+            var zip = new DecompressZip('/my/non/existant/file.zip');
+
+            zip.on('extract', function () {
+                assert(false, '"extract" event should not fire');
+                done();
+            });
+
+            zip.on('error', function (error) {
+                assert(true, '"error" event should fire');
+                done();
+            });
+
+            zip.extract({path: tmpDir});
+        });
+    });
+
     samples.forEach(function (sample) {
         var extracted = path.join(path.dirname(sample), 'extracted');
 
