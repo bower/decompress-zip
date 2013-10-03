@@ -1,4 +1,4 @@
-# decompress-zip [![Build Status](https://secure.travis-ci.org/bower/decompress-zip.png?branch=master)](http://travis-ci.org/bower/decompress-zip)
+# decompress-zip [![Build Status](https://secure.travis-ci.org/bower/decompress-zip.png?branch=master)](http://travis-ci.org/bower/decompress-zip) [![Dependency Status](https://david-dm.org/bower/decompress-zip.png)](https://david-dm.org/bower/decompress-zip)
 
 Extract files from a ZIP archive
 
