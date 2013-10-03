@@ -10,8 +10,10 @@ Extracts the contents of the ZIP archive `file`.
 
 Returns an EventEmitter with two possible events - `error` on an error, and `extract` when the extraction has completed. The value passed to the `extract` event is a basic log of each file and how it was compressed.
 
-The default value for `options` is `{ path: '.' }`. Currently `path` is the
-only option, and is the output path for the extraction.
+**Options**
+- **path** *String* - Path to extract into (default `.`)
+- **follow** *Boolean* - If true, rather than create stored symlinks as symlinks make a shallow copy of the target instead (default `false`)
+- **filter** *Function* - A function that will be called once for each file in the archive. It takes one argument which is an object containing details of the file. Return true for any file that you want to extract, and false otherwise. (default `null`)
 
 ```js
 var DecompressZip = require('decompress-zip');
@@ -26,7 +28,10 @@ unzipper.on('extract', function (log) {
 });
 
 unzipper.extract({
-	path: 'some/path'
+    path: 'some/path',
+    filter: function (file) {
+        return file.type !== "SymbolicLink";
+    }
 });
 ```
 
