@@ -14,6 +14,7 @@ Returns an EventEmitter with two possible events - `error` on an error, and `ext
 - **path** *String* - Path to extract into (default `.`)
 - **follow** *Boolean* - If true, rather than create stored symlinks as symlinks make a shallow copy of the target instead (default `false`)
 - **filter** *Function* - A function that will be called once for each file in the archive. It takes one argument which is an object containing details of the file. Return true for any file that you want to extract, and false otherwise. (default `null`)
+- **strip** *Number* - Remove leading folders in the path structure. Equivalent to `--strip-components` for tar.
 
 ```js
 var DecompressZip = require('decompress-zip');
