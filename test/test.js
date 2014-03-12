@@ -55,6 +55,22 @@ describe('Extract', function () {
 
             zip.extract({path: tmpDir});
         });
+
+        it('should emit an error when stripping deeper than the path structure', function (done) {
+            var zip = new DecompressZip(path.join(assetsPath, samples[0]));
+
+            zip.on('extract', function () {
+                assert(false, '"extract" event should not fire');
+                done();
+            });
+
+            zip.on('error', function (error) {
+                assert(true, '"error" event should fire');
+                done();
+            });
+
+            zip.extract({path: tmpDir, strip: 3});
+        });
     });
 
     samples.forEach(function (sample) {
@@ -74,21 +90,6 @@ describe('Extract', function () {
                 });
             });
 
-            it('should emit an error when stripping deeper than the path structure', function (done) {
-                var zip = new DecompressZip(path.join(assetsPath, sample));
-
-                zip.on('extract', function () {
-                    assert(false, '"extract" event should fire');
-                    done();
-                });
-
-                zip.on('error', function (error) {
-                    assert(true, '"error" event should fire');
-                    done();
-                });
-
-                zip.extract({path: tmpDir, strip: 3});
-            });
 
             it('should extract without any errors', function (done) {
                 this.timeout(60000);
