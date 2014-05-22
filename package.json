@@ -56,6 +56,7 @@
     "binary": "~0.3.0",
     "touch": "0.0.2",
     "readable-stream": "~1.1.8",
-    "nopt": "~2.2.0"
+    "nopt": "~2.2.0",
+    "graceful-fs": "~2.0.3"
   }
 }
