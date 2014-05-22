@@ -1,6 +1,6 @@
 {
   "name": "decompress-zip",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A library for reading data from zip files",
   "main": "lib/decompress-zip.js",
   "scripts": {
