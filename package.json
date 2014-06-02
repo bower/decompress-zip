@@ -1,6 +1,6 @@
 {
   "name": "decompress-zip",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A library for reading data from zip files",
   "main": "lib/decompress-zip.js",
   "scripts": {
@@ -57,6 +57,6 @@
     "touch": "0.0.2",
     "readable-stream": "~1.1.8",
     "nopt": "~2.2.0",
-    "graceful-fs": "~2.0.3"
+    "graceful-fs": "~3.0.0"
   }
 }
