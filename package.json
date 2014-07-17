@@ -54,7 +54,7 @@
     "q": "~1.0.0",
     "mkpath": "~0.1.0",
     "binary": "~0.3.0",
-    "touch": "0.0.2",
+    "touch": "0.0.3",
     "readable-stream": "~1.1.8",
     "nopt": "~2.2.0",
     "graceful-fs": "~3.0.0"
