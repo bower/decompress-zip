@@ -3,18 +3,25 @@
 var assert = require('chai').assert;
 var DecompressZip = require('../lib/decompress-zip');
 var pkg = require('../package.json');
-var path = require('path');
-var glob = require('glob');
-var exec = require('child_process').exec;
 var tmp = require('tmp');
-var assetsPath = path.join(__dirname, 'assets');
+var jetpack = require('fs-jetpack');
 
-var samples = glob.sync('*/archive.zip', {cwd: assetsPath});
+var assetsDir = jetpack.cwd(__dirname, 'assets');
 
-if (samples.length === 0) {
-    console.log('No sample ZIP files were found. Run "grunt test-files" to download them.');
-    process.exit(1);
-}
+var samples = [
+    // main-test-pack
+    // Most common stuff you may want to extract.
+    {
+        // Default deflate algorithm
+        file: 'main-test-pack/deflate.zip',
+        treeInspect: 'main-test-pack/spec.json'
+    },
+    {
+        // "Store" (no compression, just merge stuff together)
+        file: 'main-test-pack/store.zip',
+        treeInspect: 'main-test-pack/spec.json'
+    },
+];
 
 describe('Smoke test', function () {
     it('should find the public interface', function () {
@@ -35,7 +42,7 @@ describe('Extract', function () {
                     throw err;
                 }
 
-                tmpDir = dir;
+                tmpDir = jetpack.cwd(dir, 'extracted');
                 done();
             });
         });
@@ -53,11 +60,11 @@ describe('Extract', function () {
                 done();
             });
 
-            zip.extract({path: tmpDir});
+            zip.extract({path: tmpDir.path()});
         });
 
         it('should emit an error when stripping deeper than the path structure', function (done) {
-            var zip = new DecompressZip(path.join(assetsPath, samples[0]));
+            var zip = new DecompressZip(assetsDir.path(samples[0].file));
 
             zip.on('extract', function () {
                 assert(false, '"extract" event should not fire');
@@ -69,14 +76,12 @@ describe('Extract', function () {
                 done();
             });
 
-            zip.extract({path: tmpDir, strip: 3});
+            zip.extract({path: tmpDir.path(), strip: 3});
         });
     });
 
     samples.forEach(function (sample) {
-        var extracted = path.join(path.dirname(sample), 'extracted');
-
-        describe(sample, function () {
+        describe(sample.file, function () {
             var tmpDir;
 
             before(function (done) {
@@ -85,15 +90,14 @@ describe('Extract', function () {
                         throw err;
                     }
 
-                    tmpDir = dir;
+                    tmpDir = jetpack.cwd(dir, 'extracted');
                     done();
                 });
             });
 
-
             it('should extract without any errors', function (done) {
                 this.timeout(60000);
-                var zip = new DecompressZip(path.join(assetsPath, sample));
+                var zip = new DecompressZip(assetsDir.path(sample.file));
 
                 zip.on('extract', function () {
                     assert(true, 'success callback should be called');
@@ -105,22 +109,16 @@ describe('Extract', function () {
                     done();
                 });
 
-                zip.extract({path: tmpDir});
+                zip.extract({path: tmpDir.path()});
             });
 
             it('should have the same output files as expected', function (done) {
-                exec('diff -qr ' + extracted + ' ' + tmpDir, {cwd: assetsPath}, function (err, stdout, stderr) {
-                    if (err) {
-                        if (err.code === 1) {
-                            assert(false, 'output should match');
-                        } else {
-                            throw err;
-                        }
-                    }
-                    assert.equal(stdout, '');
-                    assert.equal(stderr, '');
+                tmpDir.inspectTreeAsync('.', { checksum: 'sha1' })
+                .then(function (inspect) {
+                    var validInspect = assetsDir.read(sample.treeInspect, 'json');
+                    assert.deepEqual(inspect, validInspect, 'extracted files matches the spec');
                     done();
-                });
+                }).catch(done);
             });
         });
     });
