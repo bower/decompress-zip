@@ -24,9 +24,6 @@ module.exports = function (grunt) {
         exec: {
             coverage: {
                 command: 'node node_modules/istanbul/lib/cli.js cover --dir ./coverage node_modules/mocha/bin/_mocha -- -R dot test/*.js'
-            },
-            'test-files': {
-                command: 'node download-test-assets.js'
             }
         },
         watch: {
