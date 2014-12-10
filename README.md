@@ -29,7 +29,7 @@ unzipper.on('extract', function (log) {
 });
 
 unzipper.on('progress', function (fileIndex, fileCount) {
-    console.log('Extracting file ' + (fileIndex + 1) + ' of ' + fileCount);
+    console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
 });
 
 unzipper.extract({
