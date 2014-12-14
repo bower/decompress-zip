@@ -73,6 +73,37 @@ describe('Extract', function () {
         });
     });
 
+    describe('directory creation', function () {
+        var tmpDir, rmdirSync;
+        before(function (done) {
+            tmp.dir({unsafeCleanup: true}, function (err, dir, cleanupCallback) {
+                if (err) {
+                    throw err;
+                }
+
+                tmpDir = dir;
+                rmdirSync = cleanupCallback;
+                done();
+            });
+        });
+        
+        it('should create necessary directories, even on 2nd run', function (done) {
+            var zip = new DecompressZip(path.join(assetsPath, samples[0]));
+            zip.on('error', done);
+            zip.on('extract', function () {
+                rmdirSync(tmpDir);
+                var zip2 = new DecompressZip(path.join(assetsPath, samples[0]));
+                zip2.on('error', done);
+                zip2.on('extract', function () {
+                    done();
+                });
+                zip2.extract({path: tmpDir});
+            });
+            
+            zip.extract({path: tmpDir});
+        });
+    });
+
     samples.forEach(function (sample) {
         var extracted = path.join(path.dirname(sample), 'extracted');
 
