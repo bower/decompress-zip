@@ -74,7 +74,8 @@ describe('Extract', function () {
     });
 
     describe('directory creation', function () {
-        var tmpDir, rmdirSync;
+        var tmpDir;
+        var rmdirSync;
         before(function (done) {
             tmp.dir({unsafeCleanup: true}, function (err, dir, cleanupCallback) {
                 if (err) {
