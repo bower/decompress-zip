@@ -28,6 +28,10 @@ unzipper.on('extract', function (log) {
     console.log('Finished extracting');
 });
 
+unzipper.on('progress', function (fileIndex, fileCount) {
+    console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+});
+
 unzipper.extract({
     path: 'some/path',
     filter: function (file) {

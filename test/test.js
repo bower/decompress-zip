@@ -71,6 +71,31 @@ describe('Extract', function () {
 
             zip.extract({path: tmpDir, strip: 3});
         });
+
+        it('should emit a progress event on each file', function (done) {
+            var zip = new DecompressZip(path.join(assetsPath, samples[0]));
+            var numProgressEvents = 0;
+            var numTotalFiles = 921;
+
+            zip.on('progress', function (i, numFiles) {
+                assert.equal(numFiles, numTotalFiles, '"progress" event should include the correct number of files');
+                assert(typeof i === 'number', '"progress" event should include the number of the current file');
+                numProgressEvents++;
+            });
+
+            zip.on('extract', function () {
+                assert(true, '"extract" event should fire');
+                assert.equal(numProgressEvents, numTotalFiles, 'there should be a "progress" event for every file');
+                done();
+            });
+
+            zip.on('error', function (error) {
+                assert(false, '"error" event should not fire');
+                done();
+            });
+
+            zip.extract({path: tmpDir});
+        });
     });
 
     describe('directory creation', function () {
