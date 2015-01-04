@@ -1,6 +1,7 @@
-# decompress-zip [![Build Status](https://secure.travis-ci.org/bower/decompress-zip.png?branch=master)](http://travis-ci.org/bower/decompress-zip) [![Dependency Status](https://david-dm.org/bower/decompress-zip.png)](https://david-dm.org/bower/decompress-zip)
+# decompress-zip [![Build Status](https://travis-ci.org/bower/decompress-zip.svg?branch=master)](https://travis-ci.org/bower/decompress-zip)
 
-Extract files from a ZIP archive
+> Extract files from a ZIP archive
+
 
 ## Usage
 
@@ -66,6 +67,7 @@ unzipper.on('list', function (files) {
 unzipper.list();
 ```
 
+
 ## License
 
-Released under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
+MIT © Bower team

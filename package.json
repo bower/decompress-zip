@@ -1,7 +1,7 @@
 {
   "name": "decompress-zip",
   "version": "0.0.8",
-  "description": "A library for reading data from zip files",
+  "description": "Extract files from a ZIP archive",
   "main": "lib/decompress-zip.js",
   "scripts": {
     "test": "grunt test"
@@ -9,12 +9,9 @@
   "bin": {
     "decompress-zip": "bin/decompress-zip"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bower/decompress-zip.git"
-  },
+  "repository": "bower/decompress-zip.git",
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   },
   "keywords": [
     "zip",
@@ -27,16 +24,13 @@
     "extract",
     "zlib"
   ],
-  "author": "The Bower authors",
+  "author": "Bower team",
   "licenses": [
     {
       "type": "MIT",
       "url": "https://github.com/bower/bower/blob/master/LICENSE"
     }
   ],
-  "bugs": {
-    "url": "https://github.com/bower/decompress-zip/issues"
-  },
   "dependencies": {
     "binary": "^0.3.0",
     "graceful-fs": "^3.0.0",
@@ -50,6 +44,7 @@
     "chai": "^1.10.0",
     "glob": "^4.3.2",
     "grunt": "^0.4.1",
+    "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-exec": "^0.4.2",

@@ -1,13 +1,11 @@
 'use strict';
-
-var assert = require('chai').assert;
-var DecompressZip = require('../lib/decompress-zip');
-var pkg = require('../package.json');
 var path = require('path');
-var glob = require('glob');
 var exec = require('child_process').exec;
+var glob = require('glob');
+var assert = require('chai').assert;
 var tmp = require('tmp');
 var assetsPath = path.join(__dirname, 'assets');
+var DecompressZip = require('../lib/decompress-zip');
 
 var samples = glob.sync('*/archive.zip', {cwd: assetsPath});
 
@@ -18,7 +16,6 @@ if (samples.length === 0) {
 
 describe('Smoke test', function () {
     it('should find the public interface', function () {
-        assert.strictEqual(DecompressZip.version, pkg.version, 'DecompressZip.version is correct');
         assert.isFunction(DecompressZip, 'constructor is a function');
         assert.isFunction(DecompressZip.prototype.list, 'decompress.list is a function');
         assert.isFunction(DecompressZip.prototype.extract, 'decompress.extract is a function');
@@ -112,7 +109,7 @@ describe('Extract', function () {
                 done();
             });
         });
-        
+
         it('should create necessary directories, even on 2nd run', function (done) {
             var zip = new DecompressZip(path.join(assetsPath, samples[0]));
             zip.on('error', done);
@@ -125,7 +122,7 @@ describe('Extract', function () {
                 });
                 zip2.extract({path: tmpDir});
             });
-            
+
             zip.extract({path: tmpDir});
         });
     });
