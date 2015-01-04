@@ -34,6 +34,9 @@ module.exports = function (grunt) {
         exec: {
             coverage: {
                 command: 'node node_modules/istanbul/lib/cli.js cover --dir ./coverage node_modules/mocha/bin/_mocha -- -R dot test/*.js'
+            },
+            coveralls: {
+                command: 'node node_modules/.bin/coveralls < coverage/lcov.info'
             }
         },
         watch: {
@@ -54,5 +57,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test', ['jshint', 'simplemocha:full']);
     grunt.registerTask('coverage', 'exec:coverage');
+    grunt.registerTask('travis', ['exec:coverage', 'exec:coveralls']);
     grunt.registerTask('default', 'test');
 };
