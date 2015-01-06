@@ -41,6 +41,7 @@
     "touch": "0.0.3"
   },
   "devDependencies": {
+    "archiver": "^0.13.1",
     "chai": "^1.10.0",
     "coveralls": "^2.11.2",
     "fs-jetpack": "~0.5.2",
