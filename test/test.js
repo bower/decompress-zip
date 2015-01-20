@@ -162,7 +162,6 @@ describe('Extract', function () {
 
                 zip.extract({path: tmpDir.path()});
             });
-
             it('should have the same output files as expected', function (done) {
                 tmpDir.inspectTreeAsync('.', { checksum: 'sha1' })
                 .then(function (inspect) {
@@ -171,6 +170,23 @@ describe('Extract', function () {
                     done();
                 }).catch(done);
             });
+            it('should extract with strip ', function (done) {
+                var zip = new DecompressZip(assetsDir.path(samples[0].file));
+
+                zip.on('extract', function () {
+                    assert(true, '"extract" should fire');
+                    done();
+                });
+
+                zip.on('error', function (error) {
+                    assert(false, '"error" event should not fire');
+                    done();
+                });
+
+                zip.extract({path: tmpDir.path(), strip: 1});
+            });
+
+
         });
     });
 });
