@@ -9,7 +9,7 @@
   "bin": {
     "decompress-zip": "bin/decompress-zip"
   },
-  "repository": "bower/decompress-zip.git",
+  "repository": "bower/decompress-zip",
   "engines": {
     "node": ">=0.10.0"
   },
