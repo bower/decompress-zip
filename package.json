@@ -6,9 +6,7 @@
   "scripts": {
     "test": "grunt test"
   },
-  "bin": {
-    "decompress-zip": "bin/decompress-zip"
-  },
+  "bin": "bin/decompress-zip",
   "repository": "bower/decompress-zip",
   "engines": {
     "node": ">=0.10.0"
@@ -25,12 +23,7 @@
     "zlib"
   ],
   "author": "Bower",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/bower/bower/blob/master/LICENSE"
-    }
-  ],
+  "license": "MIT",
   "dependencies": {
     "binary": "^0.3.0",
     "graceful-fs": "^3.0.0",
