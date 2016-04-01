@@ -7,20 +7,43 @@ var DecompressZip = require('../lib/decompress-zip');
 
 var assetsDir = jetpack.cwd(__dirname, 'assets');
 
-var samples = [
-    // main-test-pack
-    // Most common stuff you may want to extract.
-    {
-        // Default deflate algorithm
-        file: 'main-test-pack/deflate.zip',
-        treeInspect: 'main-test-pack/spec.json'
-    },
-    {
-        // "Store" (no compression, just merge stuff together)
-        file: 'main-test-pack/store.zip',
-        treeInspect: 'main-test-pack/spec.json'
-    }
-];
+var samples = [];
+
+// ------------------------------------------
+// main-test-pack
+// Most common stuff you may want to extract.
+
+// Default deflate algorithm
+samples.push({
+    file: 'main-test-pack/deflate.zip',
+    treeInspect: 'main-test-pack/spec.json',
+    inspectOptions: {}
+});
+// "Store" (no compression, just merge stuff together)
+samples.push({
+    file: 'main-test-pack/store.zip',
+    treeInspect: 'main-test-pack/spec.json',
+    inspectOptions: {}
+});
+
+// ------------------------------------------
+// file-mode-pack
+// Test if files preserve theirs unix file mode when extracted.
+// This test doesn't make sense on Windows platform, so exlude it there.
+if (process.platform !== 'win32') {
+    // Default deflate algorithm
+    samples.push({
+        file: 'file-mode-pack/deflate.zip',
+        treeInspect: 'file-mode-pack/spec.json',
+        inspectOptions: { mode: true }
+    });
+    // "Store" (no compression, just merge stuff together)
+    samples.push({
+        file: 'file-mode-pack/store.zip',
+        treeInspect: 'file-mode-pack/spec.json',
+        inspectOptions: { mode: true }
+    });
+}
 
 describe('Smoke test', function () {
     it('should find the public interface', function () {
@@ -142,7 +165,7 @@ describe('Extract', function () {
                         throw err;
                     }
 
-                    tmpDir = jetpack.cwd(dir, 'extracted');
+                    tmpDir = jetpack.dir(dir + '/extracted', { mode: '755' });
                     done();
                 });
             });
@@ -163,13 +186,17 @@ describe('Extract', function () {
                 zip.extract({path: tmpDir.path()});
             });
 
-            it('should have the same output files as expected', function (done) {
-                tmpDir.inspectTreeAsync('.', { checksum: 'sha1' })
+            it('extracted files should match the spec', function (done) {
+                var options = sample.inspectOptions;
+                options.checksum = 'sha1';
+
+                tmpDir.inspectTreeAsync('.', options)
                 .then(function (inspect) {
                     var validInspect = assetsDir.read(sample.treeInspect, 'json');
-                    assert.deepEqual(inspect, validInspect, 'extracted files matches the spec');
+                    assert.deepEqual(inspect, validInspect, 'extracted files are matching the spec');
                     done();
-                }).catch(done);
+                })
+                .catch(done);
             });
         });
     });

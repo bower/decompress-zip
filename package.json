@@ -34,9 +34,10 @@
     "touch": "0.0.3"
   },
   "devDependencies": {
+    "archiver": "^0.13.1",
     "chai": "^1.10.0",
     "coveralls": "^2.11.2",
-    "fs-jetpack": "~0.5.2",
+    "fs-jetpack": "^0.5.3",
     "grunt": "^0.4.1",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.11.0",
