@@ -186,6 +186,20 @@ describe('Extract', function () {
                 zip.extract({path: tmpDir.path()});
             });
 
+            it('should allow to strip leading directories', function (done) {
+                var zip = new DecompressZip(assetsDir.path(sample.file));
+                zip.on('extract', function () {
+                    assert(true, '"extract" event should fire');
+                    done();
+                });
+
+                zip.on('error', function (error) {
+                    assert(false, '"error" event should not fire');
+                    done(error);
+                });
+
+                zip.extract({path: tmpDir.path(), strip: 1});
+            });
             it('extracted files should match the spec', function (done) {
                 var options = sample.inspectOptions;
                 options.checksum = 'sha1';
