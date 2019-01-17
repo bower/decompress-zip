@@ -121,6 +121,20 @@ describe('Extract', function () {
 
             zip.extract({path: tmpDir.path()});
         });
+        it('should emit an error when a file attempts to escape the current working directory', function (done) {
+          var zip = new DecompressZip(assetsDir + 'restrict-pack/escape.zip');
+          zip.on('extract', function () {
+              assert(false, '"extract" event should not fire');
+              done();
+          });
+
+          zip.on('error', function (error) {
+              assert(true, '"error" event should fire');
+              done();
+          });
+
+          zip.extract({path: tmpDir.path(), strip: 3});
+        });
     });
 
     describe('directory creation', function () {
