@@ -1,4 +1,4 @@
-# 0.3.0
+# 0.3.2 and 0.2.2
 
 - Fix Zip Slip Vulnerability: https://snyk.io/research/zip-slip-vulnerability
 
