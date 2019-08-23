@@ -14,6 +14,7 @@ Returns an EventEmitter with two possible events - `error` on an error, and `ext
 **Options**
 - **path** *String* - Path to extract into (default `.`)
 - **follow** *Boolean* - If true, rather than create stored symlinks as symlinks make a shallow copy of the target instead (default `false`)
+- **absolute** *Boolean* - If false, all symlinks will be exported the same way they were created, by default aboslut symlinks will be created (default `true`)
 - **filter** *Function* - A function that will be called once for each file in the archive. It takes one argument which is an object containing details of the file. Return true for any file that you want to extract, and false otherwise. (default `null`)
 - **strip** *Number* - Remove leading folders in the path structure. Equivalent to `--strip-components` for tar.
 - **restrict** *Boolean* - If true, will restrict files from being created outside `options.path`. Setting to `false` has significant security [implications](https://snyk.io/research/zip-slip-vulnerability) if you are extracting untrusted data. (default `true`)
