@@ -1,5 +1,5 @@
 {
-  "name": "decompress-zip",
+  "name": "@insightfulio/decompress-zip",
   "version": "0.3.2",
   "description": "Extract files from a ZIP archive",
   "main": "lib/decompress-zip.js",
